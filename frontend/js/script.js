@@ -78,7 +78,7 @@ const handleLogin = (event) => {
   login.style.display =  "none";
   chat.style.display = "flex";
 
-  ws = new WebSocket("ws://localhost:8080");
+  ws = new WebSocket("wss://reatime-chat-api.onrender.com");
   ws.onmessage = processMessage;
 }
 
