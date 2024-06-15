@@ -8,58 +8,52 @@
   <title>Chat</title>
 </head>
 <body>
+  <div class="wrapper-loader">
+    <div class="loader"></div>
+  </div>
+
   <section class="container">
+    <section class="login">
+      <h2>Login</h2>
+      <form class="login__form">
+        <input 
+          type="text" 
+          class="login__input" 
+          placeholder="Nome"
+          required
+        />
 
-      <section class="login">
-        <h2>Login</h2>
-        <form class="login__form">
-          <input 
-            type="text" 
-            class="login__input" 
-            placeholder="Nome"
-            required
-          />
+        <button
+          type="submit" 
+          class="login__button"
+        >
+          Entrar
+        </button>
+      </form>
+    </section>
 
-          <button
-            type="submit" 
-            class="login__button"
-          >
-            Entrar
-          </button>
-        </form>
+    <section class="chat">
+      <section class="chat__messages">
       </section>
 
-      <section class="chat">
-        <section class="chat__messages">
-          <!-- <div class="message__self">
-            Hello, World!
-          </div>
+      <form class="chat__form">
+        <input 
+          type="text" 
+          class="chat__input" 
+          placeholder="Digite uma mensagem"
+          required
+        />
 
-          <div class="message__others">
-            <span class="message__sender">Priscila</span>
-            Olá, Mundo !
-          </div> -->
-        </section>
-
-        <form class="chat__form">
-          <input 
-            type="text" 
-            class="chat__input" 
-            placeholder="Digite uma mensagem"
-            required
-          />
-
-          <button
-            type="submit" 
-            class="chat__button"
-          >
-          <span class="material-symbols-outlined">
-            send
-            </span>
-          </button>
-        </form>
-      </section>
-
+        <button
+          type="submit" 
+          class="chat__button"
+        >
+        <span class="material-symbols-outlined">
+          send
+          </span>
+        </button>
+      </form>
+    </section>
   </section>
   <script src="js/script.js"></script>
 </body>

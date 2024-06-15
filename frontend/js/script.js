@@ -1,3 +1,5 @@
+const loader = document.querySelector(".wrapper-loader");
+
 const login = document.querySelector(".login");
 const loginForm = login.querySelector(".login__form");
 const loginInput = login.querySelector(".login__input");
@@ -69,16 +71,19 @@ const processMessage = ({ data }) => {
 }
 
 const handleLogin = (event) => {
+  loader.style.display = "flex";
   event.preventDefault();
 
   user.id = crypto.randomUUID();
   user.name = loginInput.value;
   user.color = getRandomColor();
 
+  ws = new WebSocket("wss://reatime-chat-api.onrender.com");
+  ws.onopen = () => loader.style.display = "none";
+
   login.style.display =  "none";
   chat.style.display = "flex";
-
-  ws = new WebSocket("wss://reatime-chat-api.onrender.com");
+  
   ws.onmessage = processMessage;
 }
 
