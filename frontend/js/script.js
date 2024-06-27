@@ -78,7 +78,7 @@ const handleLogin = (event) => {
   user.name = loginInput.value;
   user.color = getRandomColor();
 
-  ws = new WebSocket("wss://reatime-chat-api.onrender.com");
+  ws = new WebSocket("wss://reatime-chat.onrender.com");
   ws.onopen = () => loader.style.display = "none";
 
   login.style.display =  "none";
