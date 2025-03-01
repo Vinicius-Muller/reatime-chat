@@ -1,99 +1,50 @@
-const loader = document.querySelector(".wrapper-loader");
+import {
+  loader,
+  login,
+  loginForm,
+  loginInput,
+  chat,
+  chatForm,
+  chatInput,
+  chatMessages,
+  colors
+} from "./dom-setup/index.js";
+import { User } from "./users/index.js";
+import { Service } from "./ws/index.js";
 
-const login = document.querySelector(".login");
-const loginForm = login.querySelector(".login__form");
-const loginInput = login.querySelector(".login__input");
-
-const chat = document.querySelector(".chat");
-const chatForm = chat.querySelector(".chat__form");
-const chatInput = chat.querySelector(".chat__input");
-const chatMessages = chat.querySelector(".chat__messages");
-
-const colors = [
-  "cadetblue",
-  "darkgoldenrod",
-  "cornflowerblue",
-  "darkkhaki",
-  "gold"
-]
-
-const user = {id: null, name: null, color: null};
-
-let ws;
-
-const createMessageSelfElement = (content) => {
-  const div = document.createElement("div");
-
-  div.classList.add("message__self");
-  div.innerHTML = content;
-
-  return div;
-}
-
-const createMessageOtherElement = (content, sender, senderColor) => {
-  const div = document.createElement("div");
-  const span = document.createElement("span");
-
-  div.classList.add("message__others");
-  span.classList.add("message__sender");
-  span.style.color = senderColor;
-
-  div.appendChild(span)
-
-  span.innerHTML = sender;
-  div.innerHTML += content;
-
-  return div;
-}
+const user = new User(null, null, null);
+const ws = new Service();
 
 const getRandomColor = () => {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
 }
 
-const scrollScreen = () => {
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth"
-  })
-}
-
-const processMessage = ({ data }) => {
-  const {userId, userName, userColor, content} = JSON.parse(data);
-
-  const message = userId === user.id ? 
-  createMessageSelfElement(content) : 
-  createMessageOtherElement(content, userName, userColor); 
-
-  const element = message;
-  chatMessages.appendChild(element);
-  scrollScreen();
-}
-
 const handleLogin = (event) => {
   loader.style.display = "flex";
   event.preventDefault();
 
-  user.id = crypto.randomUUID();
-  user.name = loginInput.value;
-  user.color = getRandomColor();
+  user.setId(crypto.randomUUID());
+  user.setName(loginInput.value);
+  user.setColor(getRandomColor());
 
-  ws = new WebSocket("wss://reatime-chat.onrender.com");
-  ws.onopen = () => loader.style.display = "none";
+  ws.setConnection();
+  ws.onopen();
 
-  login.style.display =  "none";
+  login.style.display = "none";
   chat.style.display = "flex";
-  
-  ws.onmessage = processMessage;
+
+  /* parei aqui */
+  ws.setProcess(user);
 }
 
 const sendMessage = (event) => {
   event.preventDefault();
 
   const message = {
-    userId: user.id,
-    userName: user.name,
-    userColor: user.color,
+    userId: user.getId(),
+    userName: user.getName(),
+    userColor: user.getColor(),
     content: chatInput.value
   }
 
