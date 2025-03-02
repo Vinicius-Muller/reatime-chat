@@ -22,4 +22,4 @@ class Service {
   }
 }
 
-export default Service;
+module.exports = Service;
