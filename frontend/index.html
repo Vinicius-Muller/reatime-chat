@@ -37,21 +37,25 @@
       </section>
 
       <form class="chat__form">
-        <input 
-          type="text" 
-          class="chat__input" 
-          placeholder="Digite uma mensagem"
-          required
-        />
+        <div class="chat__input__box">
+          <input 
+            type="text" 
+            class="chat__input" 
+            placeholder="Digite uma mensagem"
+            required
+          />
 
-        <button
-          type="submit" 
-          class="chat__button"
-        >
-        <span class="material-symbols-outlined">
-          send
-          </span>
-        </button>
+          <button
+            type="submit" 
+            class="chat__button"
+          >
+            <span class="material-symbols-outlined">
+              send
+            </span>
+          </button>
+        </div>
+
+        <nav class="chat__autocomplete"></nav>
       </form>
     </section>
   </section>

@@ -1,4 +1,4 @@
-import { chatInput } from "../dom-setup/index.js";
+import { autocompleteOptions, chatInput } from "../dom-setup/index.js";
 class Node {
   constructor() {
     this.child = {};
@@ -8,6 +8,18 @@ class Node {
 class Trie {
   constructor() {
     this.root = new Node();
+  }
+
+  saveTrieData() {
+    localStorage.setItem("autocomplete", JSON.stringify(this.root));
+  }
+
+  getTrieData() {
+    const data = localStorage.getItem("autocomplete");
+
+    if (data) {
+      this.root = JSON.parse(data);
+    }
   }
 
   add(word) {
@@ -30,20 +42,20 @@ class Trie {
     let node = this.root;
     for (const letter of input) {
       if (!node.child[letter]) {
-        return;
+        return [];
       }
 
       node = node.child[letter];
     }
 
-    const possibilities = [];
+    const possibilities = new Map();
     this.backtrack(node, input, possibilities);
     return possibilities;
   }
 
   backtrack(node, prefix, results) {
     if (node.end) {
-      results.push(prefix);
+      results.set(prefix, prefix);
     }
 
     for (const child in node.child) {
@@ -51,9 +63,39 @@ class Trie {
     }
   }
 
+  otionsEvent(possibility) {
+    const textWords = chatInput.value.split(" ");
+    textWords[textWords.length - 1] = possibility;
+    chatInput.value = textWords.join(" ");
+    autocompleteOptions.innerHTML = "";
+    chatInput.focus();
+  }
+
+  printPossibilities(possibilities) {
+    autocompleteOptions.innerHTML = "";
+    possibilities.forEach((possibility) => {
+      const option = document.createElement("span");
+      option.tabIndex = "0";
+      option.textContent = possibility;
+
+      option.addEventListener("click", () => {
+        this.otionsEvent(possibility);
+      });
+
+      option.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          this.otionsEvent(possibility);
+        }
+      });
+
+      autocompleteOptions.appendChild(option);
+    });
+  }
+
   getWordsPrefixes(prefix) {
-    const possibleResults = this.show(prefix);
-    console.log(possibleResults);
+    const currentWord = prefix.split(" ");
+    const possibleResults = this.show(currentWord[currentWord.length - 1]);
+    this.printPossibilities(possibleResults);
   }
 
   setWordPrefixes() {
@@ -61,6 +103,8 @@ class Trie {
     for (const word of words) {
       this.add(word);
     }
+
+    this.saveTrieData();
   }
 }
 

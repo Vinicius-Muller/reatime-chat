@@ -1,4 +1,4 @@
-import Service from "./ws";
+const Service = require("./ws/index.js");
 
 const wss = new Service();
 wss.setWs();

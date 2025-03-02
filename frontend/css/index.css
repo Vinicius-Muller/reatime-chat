@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
   font-size: 16px;
@@ -37,7 +37,11 @@ body {
   border-right-color: #c69293;
   animation: l2 1s infinite linear;
 }
-@keyframes l2 {to{transform: rotate(1turn)}}
+@keyframes l2 {
+  to {
+    transform: rotate(1turn);
+  }
+}
 
 .container {
   width: 100%;
@@ -82,10 +86,10 @@ body {
 
 .login__input::placeholder {
   color: #c69293;
-  opacity: 1; /* Firefox */
+  opacity: 1;
 }
 
-.login__input::-ms-input-placeholder { /* Edge 12 -18 */
+.login__input::-ms-input-placeholder {
   color: #c69293;
 }
 
@@ -118,7 +122,7 @@ body {
 
 .chat__messages {
   flex-grow: 1;
-  padding: 30px 30px 90px;
+  padding: 30px 30px 130px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -134,6 +138,29 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
+  flex-direction: column-reverse;
+}
+
+.chat__autocomplete {
+  display: flex;
+  gap: 20px;
+}
+
+.chat__autocomplete span {
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.chat__autocomplete span:focus {
+  outline: 2px solid #c69293;
+}
+
+.chat__input__box {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .chat__input {
@@ -154,6 +181,7 @@ body {
   background: none;
   color: #c69293;
   cursor: pointer;
+  margin: 0 10px;
 }
 
 .chat__button > span {

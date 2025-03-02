@@ -9,11 +9,13 @@ import Trie from "./autocomplete/index.js";
 
 const user = new User(null, null, null);
 const ws = new Service();
-const autocomplete = new Trie()
+
+const autocomplete = new Trie();
+autocomplete.getTrieData();
 
 chatInput.addEventListener("input", (event) => {
   autocomplete.getWordsPrefixes(event.target.value)
-})
+});
 
 loginForm.addEventListener("submit", (event) => {
   ws.handleLogin(event, user)

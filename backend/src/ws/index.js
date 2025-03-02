@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 
 const { WebSocketServer } = require("ws");
@@ -22,4 +22,4 @@ class Service {
   }
 }
 
-export default Service;
+module.exports = Service;

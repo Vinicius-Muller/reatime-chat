@@ -6,6 +6,7 @@ const chat = document.querySelector(".chat");
 const chatForm = chat.querySelector(".chat__form");
 const chatInput = chat.querySelector(".chat__input");
 const chatMessages = chat.querySelector(".chat__messages");
+const autocompleteOptions = chatForm.querySelector(".chat__autocomplete");
 
 const colors = [
   "cadetblue",
@@ -24,5 +25,6 @@ export {
   chatForm,
   chatInput,
   chatMessages,
-  colors
+  colors,
+  autocompleteOptions
 }
