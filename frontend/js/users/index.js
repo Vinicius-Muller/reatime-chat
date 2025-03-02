@@ -1,3 +1,5 @@
+import { colors } from "../dom-setup/index.js";
+
 export class User {
   #id;
   #name;
@@ -26,10 +28,11 @@ export class User {
   }
 
   setName(name) {
-    this.$name = name;
+    this.#name = name;
   }
 
-  setColor(color) {
-    this.#color = color;
+  setColor() {
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    this.#color = colors[randomIndex];
   }
 }

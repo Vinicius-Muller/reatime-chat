@@ -1,7 +1,5 @@
-import dotenv from 'dotenv';
-import { loader, chatMessages, window } from '../dom-setup';
-dotenv.config();
-
+import { loader, chatMessages, chatInput, loginInput, login, chat } from '../dom-setup/index.js';
+import { API_KEY } from '../../api.js';
 export class Service {
   #ws
   constructor() {
@@ -9,11 +7,12 @@ export class Service {
   }
 
   setConnection() {
-    this.#ws = new WebSocket(process.env.API_URL);
-  }
-
-  onopen() {
-    loader.style.display = "none";
+    this.#ws = new WebSocket(API_KEY);
+    this.#ws.addEventListener("open", () => {
+      loader.style.display = "none";
+      login.style.display = "none";
+      chat.style.display = "flex";
+    });
   }
 
   createMessageSelfElement(content) {
@@ -49,10 +48,12 @@ export class Service {
   }
 
   setProcess(user) {
-    this.#ws = this.processMessage(user)
+    this.#ws.addEventListener("message", (event) => {
+      this.processMessage(event.data, user);
+    })
   }
 
-  processMessage({ data, user }) {
+  processMessage(data, user) {
     const { userId, userName, userColor, content } = JSON.parse(data);
 
     const message = userId === user.getId() ?
@@ -61,6 +62,33 @@ export class Service {
 
     const element = message;
     chatMessages.appendChild(element);
-    this; scrollScreen();
+    this.scrollScreen();
+  }
+
+  handleLogin(event, user) {
+    loader.style.display = "flex";
+    event.preventDefault();
+
+    user.setId(crypto.randomUUID());
+    user.setName(loginInput.value);
+    user.setColor();
+
+    this.setConnection();
+    this.setProcess(user);
+  }
+
+
+  sendMessage(event, user) {
+    event.preventDefault();
+
+    const message = {
+      userId: user.getId(),
+      userName: user.getName(),
+      userColor: user.getColor(),
+      content: chatInput.value
+    }
+
+    this.#ws.send(JSON.stringify(message));
+    chatInput.value = "";
   }
 }
