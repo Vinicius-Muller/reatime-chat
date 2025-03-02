@@ -1,0 +1,11 @@
+{
+  "build": {
+    "command": "npm install && npm run build"
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ]
+}
