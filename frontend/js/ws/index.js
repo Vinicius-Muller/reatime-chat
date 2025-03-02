@@ -1,5 +1,4 @@
 import { loader, chatMessages, chatInput, loginInput, login, chat } from '../dom-setup/index.js';
-import { API_KEY } from '../../api.js';
 export class Service {
   #ws
   constructor() {
@@ -7,7 +6,8 @@ export class Service {
   }
 
   setConnection() {
-    this.#ws = new WebSocket(API_KEY);
+    /* need to be expose because the project is not using any packing tool */
+    this.#ws = new WebSocket("https://reatime-chat.onrender.com/");
     this.#ws.addEventListener("open", () => {
       loader.style.display = "none";
       login.style.display = "none";
